@@ -1,4 +1,3 @@
-# QuanLyThuVienMini
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -101,3 +100,4 @@ void trasach(Node* head, string masach){
     p->data.damuon--;
     cout <<" Tra sach thanh cong!\n";
 }
+ 
