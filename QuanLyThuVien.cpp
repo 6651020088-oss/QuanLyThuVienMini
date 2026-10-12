@@ -100,4 +100,51 @@ void trasach(Node* head, string masach){
     p->data.damuon--;
     cout <<" Tra sach thanh cong!\n";
 }
- 
+void kiemTraTonKho(Node*head) {
+    if (head == NULL) {
+        cout << "Danh sach sach dang rong\n";
+        return;
+}
+int luaChonTonKho;
+    cout << "\n=== CHUC NANG KIEM TRA TON KHO ===\n";
+    cout << "1. Xem tong quan ton kho tat ca cac sach\n";
+    cout << "2. Kiem tra ton kho chi tiet theo Ma Sach\n";
+    cout << "3. Danh sach cac sach DA HET HANG\n";
+    cout << "Chon (1-3):";
+    cin >> luaChonTonKho;
+
+    if (luaChonTonKho == 1) {
+        cout << "\n" << left << setw(10) << "Ma Sach"
+            << setw(25) << "Ten Sach"
+            << setw(12) << "Tong So"
+            << setw(12) << "Da Muon"
+            << setw(12) << "Ton Kho"
+            << setw(15) << "Trang Thai" << endl;
+        cout << string(86, '-') << endl;
+
+        Node* temp = head;
+        while (temp != NULL) {
+            int tonKho = temp->data.soLuong - temp->data.daMuon;
+            string trangThai = (tonKho >0) ? "CON HANG" : "HET HANG";
+            cout << left << setw(10) << temp->data.maSach
+                << setw(25) << temp->data.tenSach
+                << setw(12) << temp->data.soLuong
+                << setw(12) << temp->data.daMuon
+                << setw(12) << tonKho
+                << setw(15) << trangThai << endl;
+            temp = temp->next;
+        }
+    } else if (luaChonTonKho == 2) {
+        string ma;
+        cout << "Nhap ma sach can kiem tra: ";
+        cin >> ma;
+        Node* p = timKiemTuanTu(head,ma);
+        if (p == NULL) {
+            cout << "Khong tim thay sach co ma: " << ma << endl;
+        } else {
+            int tonKho = p->data.soLuong - p->data.daMuon;
+            cout << "\n--- CHI TIET TON KHO SACH ---" << endl;
+        
+            
+}
+
