@@ -144,6 +144,39 @@ int luaChonTonKho;
         } else {
             int tonKho = p->data.soLuong - p->data.daMuon;
             cout << "\n--- CHI TIET TON KHO SACH ---" << endl;
+            cout << "Ma sach :" << p->data.maSach << endl;
+            cout << "Ten sach :" << p->data.tenSach << endl;
+            cout << "Tong so :" << p->data.soLuong << endl;
+            cout << "Da muon :" << p->data.daMuon << endl;
+            cout << "Ton kho :" << tonKho << endl;
+            cout << "Trang thai:" << (tonKho > 0? "CON HANG TRONG KHO" : "DANG HET HANG") << endl;
+        }
+    } else if (luaChonTonKho == 3) {
+        cout << "\n--- DANH SACH SACH DANG HET HANG ---\n";
+        Node* temp = head;
+        bool found = false;
+        while (temp != NULL) {
+            int tonKho = temp->data.soLuong - temp->data.daMuon;
+            if (tonKho <= 0) {
+                cout << "-[" << temp->data.maSach << "] "<< temp->data.tenSach
+                    << "(Da muon het: " << temp->data.daMuon << "/" << temp->data.soLuong << ")\n";
+                found = true
+            }
+            temp = temp->next;
+        }
+        if (found) {
+            cout << "Tat ca cac sach deu co hang trong kho\n";
+        }
+    } else {
+        cout << "Lua chon khong hop le\n";
+    }
+}
+
+void locTheoTheLoai(Node* head, string theLoai) {
+    Node* temp = head;
+    bool found = false;
+    cout << "\n--- Danh sach sach thuoc the loai: " << theLoai << "---\n";
+    while 
         
             
 }
