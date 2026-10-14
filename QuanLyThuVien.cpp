@@ -176,8 +176,18 @@ void locTheoTheLoai(Node* head, string theLoai) {
     Node* temp = head;
     bool found = false;
     cout << "\n--- Danh sach sach thuoc the loai: " << theLoai << "---\n";
-    while 
-        
-            
+    while (temp != NULL){
+        if(temp->data.theloai==theloai){
+            cout <<"-"<< temp->data.masach << "|" <<temp->data.tensach <<"| Ton kho:" <<(temp->data.soluong-temp->data.damuon) << endl;
+            found = true;
+        }
+        temp = temp->next;
+    }
+    if(!found) cout << " Khong tim thay sach nao thuoc the loai nay!\n";
 }
+void sapXepChon(Node* head){
+    for(Node* j=i->next;j! = NULL;j = j->next){
+      if(j->data.masach < minNode ->data.masach ){
+
+
 
