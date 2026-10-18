@@ -274,19 +274,19 @@ int main() {
             case 1:
                 hienThiDanhSach(head);
                 break;
-                case 2 {
+               case 2:{
                     Sach s;
                     cout << " Nhap ma sach:"; cin >> s.masach;
                     cin.ignore(); 
                     cout << " Nhap ten sach:"; getline(cin,s.tensach);
                     cout << " Nhao the loai:"; getline(cin, s.theloai);
-                    cout << " Nhap so luong:"; getline(cin, s.soluong);
+                    cout << " Nhap so luong:"; cin>>s.soluong;
                     s.damuon = 0;
                     themSach(head , s);
                     cout << " Them sach thanh cong!\n";
                     break;
                 }
-                cse 3:{
+                case 3:{
                     string ma;
                     cout << " Nhap ma sach can sua:"; cin >> ma;
                     suaThongTinSach(head , ma);
@@ -313,6 +313,7 @@ int main() {
                     cout << " Nhap the loai can loc:";
                     cin.ignore();
                     getline(cin, tl);
+                    locTheoTheLoai(head, tl);
                     break;
                 }
                 case 8:{
@@ -326,7 +327,7 @@ int main() {
                     cout << " Da thoat va giai phong bo nho thanh cong!\n";
                     break;
                 }
-                default;
+            default:
                     cout << " Lua chon khong hop le!\n";   
                 }
         } while (luaChon !=9);
