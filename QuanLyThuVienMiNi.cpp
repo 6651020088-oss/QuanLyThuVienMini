@@ -310,8 +310,9 @@ int main() {
                 }
                 case 7:{
                     string tl;
-                    cout << " Nhap the loai can loc:"; cin >> tl;
-                    locTheoTheLoai(head , tl);
+                    cout << " Nhap the loai can loc:";
+                    cin.ignore();
+                    getline(cin, tl);
                     break;
                 }
                 case 8:{
@@ -324,7 +325,8 @@ int main() {
                     giaiPhongBoNho(head);
                     cout << " Da thoat va giai phong bo nho thanh cong!\n";
                     break;
-                deafault;
+                }
+                default;
                     cout << " Lua chon khong hop le!\n";   
                 }
         } while (luaChon !=9);
