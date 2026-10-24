@@ -1,99 +1,128 @@
-Hệ thống Quản lý Kho sách & Mượn trả Thư viện Mini
+Dưới đây là bài mô tả chi tiết và hướng dẫn sử dụng/biên dịch cho chương trình **Hệ thống Quản lý Kho sách & Mượn trả Thư viện Mini**. Bài viết được trình bày rõ ràng, mạch lạc, đúng chuẩn bài báo cáo bài tập lớn hoặc tài liệu hướng dẫn dành cho người mới nhập môn.
 
-1. Giới thiệu đề tài
-   
-Dự án Hệ thống Quản lý Kho sách & Mượn trả Thư viện Mini được xây dựng bằng ngôn ngữ C++ nhằm hỗ trợ quản lý thông tin sách, theo dõi số lượng sách trong kho và thực hiện các nghiệp vụ mượn, trả sách cơ bản trong thư viện.
+---
 
-Chương trình sử dụng danh sách liên kết đơn (Singly Linked List) để lưu trữ và quản lý dữ liệu sách. Cấu trúc này cho phép cấp phát bộ nhớ động và linh hoạt thêm, sửa hoặc cập nhật thông tin trong quá trình chương trình hoạt động.
+# BÀI MÔ TẢ VÀ HƯỚNG DẪN SỬ DỤNG
 
-Bên cạnh đó, dự án áp dụng các thuật toán tìm kiếm tuần tự, sắp xếp chọn (Selection Sort) và sắp xếp chèn (Insertion Sort) trên danh sách liên kết đơn. Dữ liệu được hỗ trợ đọc và ghi từ file .txt nhằm lưu trữ thông tin và sử dụng lại trong những lần chạy tiếp theo.
+## HỆ THỐNG QUẢN LÝ KHO SÁCH & MƯỢN TRẢ THƯ VIỆN MINI
 
-2. Mục tiêu đề tài
+---
 
-Vận dụng cấu trúc dữ liệu danh sách liên kết đơn trong bài toán quản lý sách.
+## 1. MÔ TẢ CHƯƠNG TRÌNH
 
-Thực hành cấp phát và giải phóng bộ nhớ động trong C++.
+### 1.1. Mục đích ứng dụng
 
-Áp dụng các thuật toán tìm kiếm và sắp xếp trên danh sách liên kết đơn.
+Chương trình **Hệ thống Quản lý Kho sách & Mượn trả Thư viện Mini** được thiết kế nhằm giúp người mới học lập trình nắm vững tư duy ứng dụng **Cấu trúc dữ liệu và Giải thuật (Data Structures & Algorithms)** vào giải quyết bài toán thực tế.
 
-Xây dựng các chức năng quản lý sách và nghiệp vụ mượn, trả sách.
+Dù được triển khai dưới dạng ứng dụng Web trực quan, toàn bộ tư duy xử lý cốt lõi của chương trình đều mô phỏng 100% cấu trúc quản lý bộ nhớ và giải thuật trên con trỏ trong các ngôn ngữ lập trình cơ bản như C/C++.
 
-Thực hành thao tác đọc, ghi file văn bản để lưu trữ dữ liệu.
+---
 
-Rèn luyện kỹ năng lập trình, kiểm thử và làm việc nhóm thông qua GitHub.
+### 1.2. Các tính năng chính
 
-3. Các chức năng chính
+Chương trình tích hợp đầy đủ các chức năng quản lý kho sách cơ bản:
 
-3.1. Quản lý thông tin sách
+1. **Quản lý Sách (Thêm / Sửa / Xóa):**
+* Cấp phát động node mới khi thêm sách.
+* Cập nhật thông tin khi trùng Mã Sách.
+* Giải phóng node khi xóa sách khỏi danh sách.
 
-Thêm sách mới vào danh sách.
 
-Sửa thông tin sách đã có.
+2. **Quản lý Mượn / Trả Sách & Kiểm tra tồn kho:**
+* Cho phép mượn sách (giảm số lượng tồn kho) và kiểm tra điều kiện hết sách.
+* Cho phép trả sách (tăng số lượng tồn kho).
 
-Quản lý các thông tin cơ bản như mã sách, tên sách, tác giả, thể loại và số lượng.
 
-3.2. Tìm kiếm và sắp xếp
+3. **Tìm kiếm & Lọc dữ liệu:**
+* **Tìm kiếm tuần tự (Linear Search):** Tìm sách dựa trên từ khóa tên sách.
+* **Lọc sách theo thể loại:** Trích xuất các sách thuộc cùng một nhóm thể loại.
 
-Tìm kiếm sách bằng thuật toán tìm kiếm tuần tự.
 
-Sắp xếp danh sách sách bằng thuật toán Selection Sort.
+4. **Thuật toán Sắp xếp (Sorting Algorithms):**
+* **Sắp xếp Chọn (Selection Sort):** Sắp xếp danh sách theo số lượng tồn kho tăng dần bằng cách hoán đổi dữ liệu node.
+* **Sắp xếp Chèn (Insertion Sort):** Sắp xếp danh sách theo tên sách (A-Z) bằng cách tái liên kết các con trỏ `next`.
 
-Sắp xếp danh sách sách bằng thuật toán Insertion Sort.
 
-3.3. Quản lý mượn và trả sách
+5. **Đọc & Ghi File văn bản (`.txt`):**
+* Xuất danh sách hiện tại ra file `danh_sach_sach.txt`.
+* Đọc dữ liệu từ file `.txt` có sẵn để khởi tạo lại Danh sách liên kết.
 
-Thực hiện nghiệp vụ mượn sách.
 
-Cập nhật số lượng sách còn trong kho khi mượn.
 
-Thực hiện nghiệp vụ trả sách.
+---
 
-Cập nhật lại số lượng sách sau khi trả.
+### 1.3. Cấu trúc dữ liệu và Giải thuật áp dụng
 
-Kiểm tra tính hợp lệ của số lượng sách trước khi thực hiện giao dịch.
+| Khái niệm / Giải thuật | Cách triển khai trong mã nguồn |
+| --- | --- |
+| **Node (Mắt xích)** | Lớp `Node` gồm dữ liệu sách và con trỏ `next` trỏ tới Node tiếp theo. |
+| **Singly Linked List** | Con trỏ `head` quản lý node đầu tiên, duyệt qua danh sách bằng vòng lặp `while (p !== null)`. |
+| **Cấp phát & Giải phóng** | Khởi tạo bằng `new Node()`, giải phóng bằng cách hủy liên kết và gán `temp = null`. |
+| **Linear Search** | Duyệt lần lượt từng node từ `head` đến cuối danh sách để so sánh chuỗi. |
+| **Selection Sort** | Tìm node có số lượng nhỏ nhất trong phần chưa sắp xếp và hoán đổi dữ liệu. |
+| **Insertion Sort** | Rút từng node khỏi danh sách cũ và chèn vào vị trí thích hợp trong danh sách mới đã sắp xếp. |
 
-3.4. Quản lý tồn kho và lọc sách
+---
 
-Kiểm tra số lượng sách còn trong kho.
+## 2. HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY CHƯƠNG TRÌNH
 
-Lọc và hiển thị sách theo thể loại.
+Do chương trình được viết hoàn toàn bằng **HTML, CSS và JavaScript thuần (Vanilla JS)** trên cùng 1 tệp duy nhất, bạn **không cần cài đặt bất kỳ trình biên dịch (compiler) phức tạp hay máy chủ (server) nào**.
 
-Hỗ trợ theo dõi tình trạng sách trong quá trình quản lý.
+### Cách 1: Chạy trực tiếp trên trình duyệt Web (Khuyên dùng)
 
-3.5. Lưu trữ dữ liệu
+1. **Tạo tệp mã nguồn:**
+* Tạo một tệp tin mới đặt tên là `index.html`.
+* Dán toàn bộ đoạn mã HTML/JS đã được cung cấp vào tệp này và lưu lại (`Ctrl + S`).
 
-Đọc dữ liệu sách từ file .txt khi khởi động chương trình (nếu được triển khai).
 
-Ghi dữ liệu vào file .txt để lưu trữ thông tin.
+2. **Khởi chạy ứng dụng:**
+* Nhấp đôi chuột (double click) vào tệp `index.html`.
+* Hoặc chuột phải vào tệp `index.html` $\rightarrow$ Chọn **Open with** $\rightarrow$ Chọn trình duyệt web bất kỳ (Google Chrome, Microsoft Edge, Mozilla Firefox, Brave,...).
 
-Giải phóng bộ nhớ động đã cấp phát khi không còn sử dụng.
 
-4. Công nghệ và kiến thức sử dụng
 
-Ngôn ngữ lập trình: C++.
+---
 
-Cấu trúc dữ liệu: Danh sách liên kết đơn (Singly Linked List).
+### Cách 2: Chạy và biên dịch qua Extension "Live Server" trong VS Code
 
-Cấu trúc Node: Sử dụng struct hoặc class với con trỏ liên kết đến Node tiếp theo.
+Nếu bạn đang sử dụng trình soạn thảo **Visual Studio Code**:
 
-Quản lý bộ nhớ: Cấp phát và giải phóng bộ nhớ động.
+1. Mở thư mục chứa tệp `index.html` trong VS Code.
+2. Vào mục **Extensions** (`Ctrl + Shift + X`), tìm kiếm extension tên **Live Server** và nhấn **Install**.
+3. Chuột phải vào tệp `index.html` trong giao diện VS Code và chọn **Open with Live Server**.
+4. Trình duyệt sẽ tự động mở trang web quản lý thư viện tại địa chỉ `[http://127.0.0.1:5500/index.html](http://127.0.0.1:5500/index.html)`.
 
-Thuật toán tìm kiếm: Tìm kiếm tuần tự (Linear Search).
+---
 
-Thuật toán sắp xếp: Selection Sort và Insertion Sort.
+## 3. HƯỚNG DẪN SỬ DỤNG CÁC CHỨC NĂNG
 
-Lưu trữ dữ liệu: File văn bản .txt.
+### 3.1. Thêm / Cập nhật sách
 
-Quản lý mã nguồn: Git và GitHub.
+1. Nhập **Mã Sách**, **Tên Sách**, **Thể Loại**, và **Số Lượng**.
+2. Nhấn nút **"Lưu Sách Vào Danh Sách"**:
+* Nếu Mã Sách **mới**: Chương trình sẽ tạo một Node mới và nối vào cuối Danh sách liên kết.
+* Nếu Mã Sách **đã tồn tại**: Chương trình tự động cập nhật lại thông tin của Node đó.
 
-5. Yêu cầu cài đặt
 
-Để biên dịch và chạy chương trình, máy tính cần có:
 
-Hệ điều hành Windows, Linux hoặc macOS.
+### 3.2. Mượn / Trả sách
 
-Trình biên dịch C++ hỗ trợ chuẩn C++11 trở lên, ví dụ GCC/G++.
+1. Di chuyển đến mục **2. Mượn / Trả Sách**.
+2. Nhập Mã Sách cần thao tác (VD: `S01`).
+3. Nhấn nút **"Mượn 1 Cuốn"** (số lượng tồn kho giảm 1) hoặc **"Trả 1 Cuốn"** (số lượng tồn kho tăng 1).
 
-Trình soạn thảo mã nguồn như Visual Studio Code, Code::Blocks hoặc Dev-C++.
+### 3.3. Tìm kiếm & Lọc sách
 
-Các file mã nguồn .cpp, file tiêu đề .h (nếu có) và file dữ liệu cần thiết của dự án.
+* **Tìm kiếm theo tên:** Nhập từ khóa vào ô tìm kiếm $\rightarrow$ Nhấn **"Tìm Kiếm"** (Thực hiện thuật toán tìm kiếm tuần tự).
+* **Lọc thể loại:** Nhập tên thể loại (VD: `Cong nghe`) $\rightarrow$ Nhấn **"Lọc Sách"**.
+* Nhấn nút **"Hiển Thị Tất Cả"** để quay lại danh sách ban đầu.
+
+### 3.4. Sắp xếp danh sách
+
+* Nhấn nút **"Sắp Xếp Chọn (Selection Sort)..."** để sắp xếp danh sách theo số lượng tồn kho tăng dần.
+* Nhấn nút **"Sắp Xếp Chèn (Insertion Sort)..."** để sắp xếp danh sách theo tên sách theo thứ tự bảng chữ cái A-Z.
+
+### 3.5. Đọc & Ghi File (.txt)
+
+* **Ghi File:** Nhấn nút **"Xuất / Lưu Danh Sách Ra File (.txt)"**, trình duyệt sẽ tải về tệp `danh_sach_sach.txt` chứa dữ liệu các node dạng: `Mã,Tên,ThểLoại,SốLượng`.
+* **Đọc File:** Nhấn nút **"Choose File"** (hoặc **"Chọn tệp"**) $\rightarrow$ Chọn tệp `.txt` có định dạng tương tự để chương trình đọc và xây dựng lại Danh sách liên kết mới.
