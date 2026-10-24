@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hệ thống Quản lý Thư viện Mini</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #000;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .box {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        table {
+            width: 100%;
+            background: #fff;
+        }
+        th {
+            background-color: #eee;
+        }
+        input, select, button {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HỆ THỐNG QUẢN LÝ KHO SÁCH & MƯỢN TRẢ THƯ VIỆN MINI</h1>
+    <p><i>(Sử dụng Cấu trúc Danh sách liên kết đơn - Singly Linked List & Thuật toán Cơ bản)</i></p>
+
+    <div class="box">
+        <h2>1. Thêm / Cập nhật Sách</h2>
+        <label>Mã Sách:</label><br>
+        <input type="text" id="maSach" placeholder="VD: S01"><br>
+        <label>Tên Sách:</label><br>
+        <input type="text" id="tenSach" placeholder="VD: Lập trình C"><br>
+        <label>Thể loại:</label><br>
+        <input type="text" id="theLoai" placeholder="VD: Công nghệ"><br>
+        <label>Số lượng trong kho:</label><br>
+        <input type="number" id="soLuong" value="5"><br><br>
+        <button onclick="themHoacSuaSach()">Lưu Sách Vào Danh Sách</button>
+        <button onclick="xoaRongForm()">Xóa Nhập Lại</button>
+    </div>
+
+    <div class="box">
+        <h2>2. Mượn / Trả Sách</h2>
+        <label>Nhập Mã Sách cần Mượn/Trả:</label>
+        <input type="text" id="maSachMuonTra" placeholder="VD: S01">
+        <button onclick="muonSach()">Mượn 1 Cuốn</button>
+        <button onclick="traSach()">Trả 1 Cuốn</button>
+    </div>
+
+    <div class="box">
+        <h2>3. Tìm Kiếm Tuần Tự & Lọc Sách</h2>
+        <label>Tìm kiếm theo Tên Sách (Tuần tự):</label>
+        <input type="text" id="tuKhoaTim" placeholder="Nhập tên sách...">
+        <button onclick="timKiemTuanTu()">Tìm Kiếm</button>
+        <br><br>
+        <label>Lọc theo Thể Loại:</label>
+        <input type="text" id="theLoaiLoc" placeholder="Nhập thể loại...">
+        <button onclick="locTheoTheLoai()">Lọc Sách</button>
+        <button onclick="hienThiDanhSach(head)">Hiển Thị Tất Cả</button>
+    </div>
+
+    <div class="box">
+        <h2>4. Sắp Xếp Danh Sách Liên Kết</h2>
+        <button onclick="sapXepChonTheoSoLuong()">Sắp Xếp Chọn (Selection Sort) - Số Lượng Tăng Dần</button>
+        <button onclick="sapXepChenTheoTen()">Sắp Xếp Chèn (Insertion Sort) - Tên Sách (A-Z)</button>
+    </div>
+
+    <div class="box">
+        <h2>5. Đọc & Ghi File (.txt)</h2>
+        <button onclick="ghiFileTXT()">Xuất / Luu Danh Sách Ra File (.txt)</button>
+        <br><br>
+        <label>Đọc dữ liệu từ File (.txt):</label>
+        <input type="file" id="fileInput" accept=".txt" onchange="docFileTXT(event)">
+    </div>
+
+    <h2>DANH SÁCH SÁCH TRONG THƯ VIỆN</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã Sách</th>
+                <th>Tên Sách</th>
+                <th>Thể Loại</th>
+                <th>Số Lượng Tồn Kho</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody id="bangDanhSach">
+        </tbody>
+    </table>
+
+    <script>
+        class Node {
+            constructor(maSach, tenSach, theLoai, soLuong) {
+                this.maSach = maSach;
+                this.tenSach = tenSach;
+                this.theLoai = theLoai;
+                this.soLuong = parseInt(soLuong);
+                this.next = null; 
+            }
+        }
+
+        let head = null;
+
+        function themHoacSuaSach() {
+            let ma = document.getElementById("maSach").value.trim();
+            let ten = document.getElementById("tenSach").value.trim();
+            let theLoai = document.getElementById("theLoai").value.trim();
+            let soLuong = document.getElementById("soLuong").value;
+
+            if (ma === "" || ten === "") {
+                alert("Vui lòng nhập đầy đủ Mã sách và Tên sách!");
+                return;
+            }
+
+            let p = head;
+            while (p !== null) {
+                if (p.maSach === ma) {
+                    p.tenSach = ten;
+                    p.theLoai = theLoai;
+                    p.soLuong = parseInt(soLuong);
+                    alert("Cập nhật thông tin sách thành công!");
+                    hienThiDanhSach(head);
+                    xoaRongForm();
+                    return;
+                }
+                p = p.next;
+            }
+
+            let newNode = new Node(ma, ten, theLoai, soLuong);
+
+            if (head === null) {
+                head = newNode;
+            } else {
+                let temp = head;
+                while (temp.next !== null) {
+                    temp = temp.next;
+                }
+                temp.next = newNode;
+            }
+
+            alert("Thêm sách mới thành công!");
+            hienThiDanhSach(head);
+            xoaRongForm();
+        }
+
+        function xoaNode(ma) {
+            if (head === null) return;
+
+            if (head.maSach === ma) {
+                let temp = head;
+                head = head.next;
+                temp = null;
+                hienThiDanhSach(head);
+                return;
+            }
+
+            let p = head;
+            while (p.next !== null && p.next.maSach !== ma) {
+                p = p.next;
+            }
+
+            if (p.next !== null) {
+                let temp = p.next;
+                p.next = p.next.next;
+                temp = null; 
+                hienThiDanhSach(head);
+            }
+        }
+
+        function muonSach() {
+            let ma = document.getElementById("maSachMuonTra").value.trim();
+            let p = head;
+            while (p !== null) {
+                if (p.maSach === ma) {
+                    if (p.soLuong > 0) {
+                        p.soLuong--;
+                        alert("Mượn sách thành công! Số lượng còn lại: " + p.soLuong);
+                        hienThiDanhSach(head);
+                    } else {
+                        alert("Sách này đã hết trong kho!");
+                    }
+                    return;
+                }
+                p = p.next;
+            }
+            alert("Không tìm thấy mã sách!");
+        }
+
+        function traSach() {
+            let ma = document.getElementById("maSachMuonTra").value.trim();
+            let p = head;
+            while (p !== null) {
+                if (p.maSach === ma) {
+                    p.soLuong++;
+                    alert("Trả sách thành công! Số lượng hiện tại: " + p.soLuong);
+                    hienThiDanhSach(head);
+                    return;
+                }
+                p = p.next;
+            }
+            alert("Không tìm thấy mã sách!");
+        }
+
+        function timKiemTuanTu() {
+            let tuKhoa = document.getElementById("tuKhoaTim").value.toLowerCase().trim();
+            if (tuKhoa === "") {
+                hienThiDanhSach(head);
+                return;
+            }
+
+            let headKetQua = null;
+            let tailKetQua = null;
+
+            let p = head;
+            while (p !== null) {
+                if (p.tenSach.toLowerCase().includes(tuKhoa)) {
+                    let newNode = new Node(p.maSach, p.tenSach, p.theLoai, p.soLuong);
+                    if (headKetQua === null) {
+                        headKetQua = newNode;
+                        tailKetQua = newNode;
+                    } else {
+                        tailKetQua.next = newNode;
+                        tailKetQua = newNode;
+                    }
+                }
+                p = p.next;
+            }
+            hienThiDanhSach(headKetQua);
+        }
+
+        function locTheoTheLoai() {
+            let theLoaiLoc = document.getElementById("theLoaiLoc").value.toLowerCase().trim();
+            if (theLoaiLoc === "") {
+                hienThiDanhSach(head);
+                return;
+            }
+
+            let headKetQua = null;
+            let tailKetQua = null;
+
+            let p = head;
+            while (p !== null) {
+                if (p.theLoai.toLowerCase() === theLoaiLoc) {
+                    let newNode = new Node(p.maSach, p.tenSach, p.theLoai, p.soLuong);
+                    if (headKetQua === null) {
+                        headKetQua = newNode;
+                        tailKetQua = newNode;
+                    } else {
+                        tailKetQua.next = newNode;
+                        tailKetQua = newNode;
+                    }
+                }
+                p = p.next;
+            }
+            hienThiDanhSach(headKetQua);
+        }
+
+        function sapXepChonTheoSoLuong() {
+            for (let i = head; i !== null; i = i.next) {
+                let minNode = i;
+                for (let j = i.next; j !== null; j = j.next) {
+                    if (j.soLuong < minNode.soLuong) {
+                        minNode = j;
+                    }
+                }
+                if (minNode !== i) {
+                    hoanDoiNodeData(i, minNode);
+                }
+            }
+            hienThiDanhSach(head);
+            alert("Đã sắp xếp chọn (Selection Sort) theo số lượng!");
+        }
+
+        function sapXepChenTheoTen() {
+            let sortedHead = null;
+            let current = head;
+
+            while (current !== null) {
+                let nextNode = current.next;
+                
+                if (sortedHead === null || sortedHead.tenSach.localeCompare(current.tenSach) >= 0) {
+                    current.next = sortedHead;
+                    sortedHead = current;
+                } else {
+                    let p = sortedHead;
+                    while (p.next !== null && p.next.tenSach.localeCompare(current.tenSach) < 0) {
+                        p = p.next;
+                    }
+                    current.next = p.next;
+                    p.next = current;
+                }
+
+                current = nextNode;
+            }
+            head = sortedHead;
+            hienThiDanhSach(head);
+            alert("Đã sắp xếp chèn (Insertion Sort) theo tên sách!");
+        }
+
+        function hoanDoiNodeData(node1, node2) {
+            let tempMa = node1.maSach;
+            let tempTen = node1.tenSach;
+            let tempTL = node1.theLoai;
+            let tempSL = node1.soLuong;
+
+            node1.maSach = node2.maSach;
+            node1.tenSach = node2.tenSach;
+            node1.theLoai = node2.theLoai;
+            node1.soLuong = node2.soLuong;
+
+            node2.maSach = tempMa;
+            node2.tenSach = tempTen;
+            node2.theLoai = tempTL;
+            node2.soLuong = tempSL;
+        }
+
+        function ghiFileTXT() {
+            if (head === null) {
+                alert("Danh sách rỗng, không có dữ liệu để xuất!");
+                return;
+            }
+
+            let noidung = "";
+            let p = head;
+            while (p !== null) {
+                noidung += p.maSach + "," + p.tenSach + "," + p.theLoai + "," + p.soLuong + "\n";
+                p = p.next;
+            }
+
+            let blob = new Blob([noidung], { type: "text/plain;charset=utf-8" });
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "danh_sach_sach.txt";
+            a.click();
+        }
+
+        function docFileTXT(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let noidung = e.target.result;
+                let cacDong = noidung.split("\n");
+
+                head = null;
+
+                for (let i = 0; i < cacDong.length; i++) {
+                    let dong = cacDong[i].trim();
+                    if (dong !== "") {
+                        let phanTu = dong.split(",");
+                        if (phanTu.length >= 4) {
+                            let newNode = new Node(phanTu[0], phanTu[1], phanTu[2], phanTu[3]);
+                            if (head === null) {
+                                head = newNode;
+                            } else {
+                                let temp = head;
+                                while (temp.next !== null) {
+                                    temp = temp.next;
+                                }
+                                temp.next = newNode;
+                            }
+                        }
+                    }
+                }
+                alert("Đã tải dữ liệu từ file .txt thành công!");
+                hienThiDanhSach(head);
+            };
+            reader.readAsText(file);
+        }
+
+        function hienThiDanhSach(headList) {
+            let tbody = document.getElementById("bangDanhSach");
+            tbody.innerHTML = ""; 
+
+            let p = headList;
+            if (p === null) {
+                tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Danh sách rỗng</td></tr>";
+                return;
+            }
+
+            while (p !== null) {
+                let tr = document.createElement("tr");
+                tr.innerHTML = "<td>" + p.maSach + "</td>" +
+                               "<td>" + p.tenSach + "</td>" +
+                               "<td>" + p.theLoai + "</td>" +
+                               "<td>" + p.soLuong + "</td>" +
+                               "<td><button onclick=\"suaSachForm('" + p.maSach + "')\">Sửa</button> " +
+                               "<button onclick=\"xoaNode('" + p.maSach + "')\">Xóa</button></td>";
+                tbody.appendChild(tr);
+                p = p.next;
+            }
+        }
+
+        function suaSachForm(ma) {
+            let p = head;
+            while (p !== null) {
+                if (p.maSach === ma) {
+                    document.getElementById("maSach").value = p.maSach;
+                    document.getElementById("tenSach").value = p.tenSach;
+                    document.getElementById("theLoai").value = p.theLoai;
+                    document.getElementById("soLuong").value = p.soLuong;
+                    return;
+                }
+                p = p.next;
+            }
+        }
+
+        function xoaRongForm() {
+            document.getElementById("maSach").value = "";
+            document.getElementById("tenSach").value = "";
+            document.getElementById("theLoai").value = "";
+            document.getElementById("soLuong").value = "5";
+        }
+
+        window.onload = function() {
+            let node1 = new Node("S01", "Lap trinh C", "Cong nghe", 10);
+            let node2 = new Node("S02", "Cau truc du lieu", "Cong nghe", 5);
+            let node3 = new Node("S03", "Dac nhan tam", "Ky nang", 7);
+            
+            head = node1;
+            node1.next = node2;
+            node2.next = node3;
+
+            hienThiDanhSach(head);
+        };
+    </script>
+</body>
+</html>
